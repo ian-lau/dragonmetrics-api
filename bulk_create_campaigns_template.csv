@@ -1,0 +1,3 @@
+name,site,track_links,crawl_site,crawl_limit,crawl_speed,alternate_seed_url,keyword_limit
+cmp_1,example.com,false,false,0,slow,example.com,1
+cmp_2,example.com,false,false,0,slow,example.com,1
