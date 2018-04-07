@@ -5,7 +5,7 @@ import csv
 
 username = '' # Your API username
 password = '' # Your API password
-campaigns = 'bulk_create_campaigns_template.csv' ### Your new campaigns
+campaigns = 'bulk_create_campaigns_template.csv' # Your new campaigns
 
 credentials = base64.b64encode(bytes(username+':'+password, 'utf-8')).decode('utf-8')
 headers = {'Accept': 'application/json','Authorization': 'Basic '+credentials,'Content-Type': 'application/json'}
