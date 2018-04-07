@@ -18,20 +18,14 @@ r_json = r.json()
 campaigns = []
 
 for campaign in r_json['results']:
-	campaigns.append({
-		'id': campaign['id'],
-		'name': campaign['name']
-		})
+	campaigns.append({'id': campaign['id'],'name': campaign['name']})
 	print('Campaigns count: '+str(len(campaigns)))
 	while r_json['paging']['next'] is not None:
 		url = r_json['paging']['next']
 		r = requests.get(url, headers=headers)
 		r_json = r.json()
 		for campaign in r_json['results']:
-			campaigns.append({
-				'id': campaign['id'],
-				'name': campaign['name']
-				})
+			campaigns.append({'id': campaign['id'],'name': campaign['name']})
 			print('Campaigns count: '+str(len(campaigns)))
 
 for campaign in campaigns:
