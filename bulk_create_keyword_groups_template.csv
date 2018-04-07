@@ -1,0 +1,4 @@
+name,search_engines,competitors
+kw_group_1,"google|US|en|desktop , google|uk|en|mobile","example.com, test.com"
+kw_group_2,"google|US|en|desktop , google|uk|en|mobile","example2.com, test2.com"
+kw_group_3,"google|US|en|desktop , google|uk|en|mobile","example2.com, test3.com"
