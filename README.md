@@ -1,7 +1,8 @@
 # dragonmetrics-api
+https://api.dragonmetrics.com/
 
 ## Auto Tagger
-Automatically add tags to keywords based or word frequency
+Automatically create a pre-defined number of tags for keywords based on word frequencies
 
 ## Bulk Create Campaigns
 Read CSV template and create campaigns in bulk
