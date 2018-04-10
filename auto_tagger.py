@@ -8,7 +8,7 @@ from nltk.tokenize import word_tokenize
 # nltk.download('punkt')
 
 username = '' # API user name goes here
-password = ' # API password goes here
+password = '' # API password goes here
 target_campaign = '' # Campaign name goes here
 tags_to_add = 20 # Number of tags to add
 
@@ -26,7 +26,7 @@ for campaign in r_json['results']:
 		'id': campaign['id'],
 		'name': campaign['name']
 		})
-	print('Campaigns count: '+str(len(campaigns)))
+	print('Finding campaigns...')
 	while r_json['paging']['next'] is not None:
 		url = r_json['paging']['next']
 		r = requests.get(url, headers=headers)
@@ -36,14 +36,13 @@ for campaign in r_json['results']:
 				'id': campaign['id'],
 				'name': campaign['name']
 				})
-			print('Campaigns count: '+str(len(campaigns)))
 
 bag_of_words = ''
 keyword_list = []
 
 for campaign in campaigns:
 	if campaign['name'] == target_campaign:
-		print('Campaign '+target_campaign+' found, getting keywords...')
+		print('Campaign "'+target_campaign+'" found, getting keywords...')
 		global target_campaign_id
 		target_campaign_id = campaign['id']
 		url = 'https://api.dragonmetrics.com/v1.3/campaigns/'+str(target_campaign_id)+'/keywords?start=0&limit=50'
@@ -81,6 +80,7 @@ df = pd.Series(freq).to_frame()
 df = df.sort_values(by=0, ascending=False)
 
 tags = df.head(tags_to_add).index.tolist()
+print('The following tags will be created:')
 print(tags)
 
 for keyword in keyword_list:
@@ -89,7 +89,7 @@ for keyword in keyword_list:
 			if tag not in keyword['tags']:
 				keyword['tags'].append(tag)
 
-print('Adding tags to your campiagn...')
+print('Adding tags to your keywords...')
 url = 'https://api.dragonmetrics.com/v1.3/campaigns/'+str(target_campaign_id)+'/keywords'
 r = requests.put(url, data=json.dumps(keyword_list), headers=headers)
 print('Done')
