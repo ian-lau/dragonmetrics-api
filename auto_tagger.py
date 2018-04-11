@@ -4,8 +4,8 @@ import pandas as pd
 import json
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-# nltk.download('stopwords')
-# nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('punkt')
 
 username = '' # API user name goes here
 password = '' # API password goes here
@@ -15,7 +15,7 @@ tags_to_add = 20 # Number of tags to add
 credentials = base64.b64encode(bytes(username+':'+password, 'utf-8')).decode('utf-8')
 headers = {'Accept': 'application/json','Authorization': 'Basic '+credentials,'Content-Type': 'application/json'}
 
-url = 'https://api.dragonmetrics.com/v1.3/campaigns?limit=50&start=0'
+url = 'https://api.dragonmetrics.com/v1.3/campaigns?limit=500&start=0'
 r = requests.get(url, headers=headers)
 r_json = r.json()
 
@@ -45,7 +45,7 @@ for campaign in campaigns:
 		print('Campaign "'+target_campaign+'" found, getting keywords...')
 		global target_campaign_id
 		target_campaign_id = campaign['id']
-		url = 'https://api.dragonmetrics.com/v1.3/campaigns/'+str(target_campaign_id)+'/keywords?start=0&limit=50'
+		url = 'https://api.dragonmetrics.com/v1.3/campaigns/'+str(target_campaign_id)+'/keywords?start=0&limit=500'
 		r = requests.get(url, headers=headers)
 		r_json = r.json()
 		for keyword in r_json['results']:
@@ -91,5 +91,13 @@ for keyword in keyword_list:
 
 print('Adding tags to your keywords...')
 url = 'https://api.dragonmetrics.com/v1.3/campaigns/'+str(target_campaign_id)+'/keywords'
-r = requests.put(url, data=json.dumps(keyword_list), headers=headers)
+
+def chunks(l, n):
+	for i in range(0, len(l), n):
+		yield l[i:i + n]
+
+for chunk in chunks(keyword_list,100):
+	r = requests.put(url, data=json.dumps(chunk), headers=headers)
+	print('Updating keywords... '+str(len(chunk))+' keywords just got updated')
+
 print('Done')
