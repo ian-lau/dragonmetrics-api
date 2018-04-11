@@ -6,6 +6,9 @@ API Docs: https://api.dragonmetrics.com/
 ## Auto Tagger
 Automatically create a pre-defined number of tags for keywords based on word frequencies
 
+## Auto Translator
+Automatically create translations for keywords in a campaign using googletrans
+
 ## Bulk Create Campaigns
 Read CSV template and create campaigns in bulk
 
